@@ -86,6 +86,7 @@ class IngestProviderResource(Resource):
         'routing_scheme': Resource.rel('routing_schemes', nullable=True)
     }
 
+    etag_ignore_fields = ['last_updated', 'last_item_update']
     privileges = {'POST': 'ingest_providers', 'PATCH': 'ingest_providers', 'DELETE': 'ingest_providers'}
 
 
