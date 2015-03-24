@@ -100,7 +100,7 @@ class UsersService(BaseService):
     def on_created(self, docs):
         for user_doc in docs:
             self.update_user_defaults(user_doc)
-            add_activity(ACTIVITY_CREATE, 'created user {{user}}',
+            add_activity(ACTIVITY_CREATE, 'created user {{user}}', self.datasource,
                          user=user_doc.get('display_name', user_doc.get('username')))
 
     def on_update(self, updates, original):
@@ -146,7 +146,8 @@ class UsersService(BaseService):
         return super().delete(lookup)
 
     def on_deleted(self, doc):
-        add_activity(ACTIVITY_DELETE, 'removed user {{user}}', user=doc.get('display_name', doc.get('username')))
+        add_activity(ACTIVITY_DELETE, 'removed user {{user}}', self.datasource,
+                     user=doc.get('display_name', doc.get('username')))
 
     def on_fetched(self, document):
         for doc in document['_items']:
